@@ -10,11 +10,10 @@ interface listData {
 }
 
 function Lister({ data, listfor }: { data: listData[]; listfor: string }) {
-  console.log(data);
   return (
     <>
       <ul className="grid md:grid-cols-2 gap-5 auto-cols-fr">
-        {data.map((item: listData) => {
+        {data?.map((item: listData) => {
           if (listfor === "spacecrafts") {
             return (
               <li

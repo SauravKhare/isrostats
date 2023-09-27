@@ -1,18 +1,14 @@
-import { useEffect, useState } from "react";
+import axios from "axios";
+import { useQuery } from "react-query";
 import Lister from "../components/Lister";
 
 function CustomerLaunches() {
-  const [customerLaunches, setCustomerLaunches] = useState([]);
-
-  async function getCustomerLaunches() {
-    const req = await fetch("https://isro.vercel.app/api/customer_satellites");
-    const res = await req.json();
-    setCustomerLaunches(res.customer_satellites);
+  async function fetcher() {
+    const res = await axios.get("https://isro.vercel.app/api/customer_satellites");
+    return res.data.customer_satellites;
   }
 
-  useEffect(() => {
-    getCustomerLaunches();
-  }, []);
+  const { isLoading, data } = useQuery("customerslaunches", fetcher, {staleTime: 86400});
 
   return (
     <section className="bg-zinc-900 min-h-screen text-white">
@@ -24,7 +20,11 @@ function CustomerLaunches() {
         </p>
       </div>
       <div className="container mx-auto px-10 md:px-40 py-10">
-        <Lister data={customerLaunches} listfor="customer-launches" />
+      {isLoading ? (
+          <p>Loading....</p>
+        ) : (
+          <Lister data={data} listfor="customer-launches" />
+        )}
       </div>
     </section>
   );

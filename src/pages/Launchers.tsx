@@ -1,18 +1,15 @@
-import { useEffect, useState } from "react";
 import Lister from "../components/Lister";
+import axios from "axios";
+import { useQuery } from "react-query";
 
 function Launchers() {
-  const [launchers, setLaunchers] = useState([]);
-
-  async function getLaunchers() {
-    const req = await fetch("https://isro.vercel.app/api/launchers");
-    const res = await req.json();
-    setLaunchers(res.launchers);
+  async function fetcher() {
+    const res = await axios.get("https://isro.vercel.app/api/launchers")
+    return res.data.launchers;
   }
 
-  useEffect(() => {
-    getLaunchers();
-  }, []);
+  const { isLoading, data } = useQuery("launchrs", fetcher, {staleTime: 86400});
+
   return (
     <section className="bg-zinc-900 min-h-screen text-white">
       <div className="px-10 md:px-40 pt-10">
@@ -23,7 +20,11 @@ function Launchers() {
         </p>
       </div>
       <div className="container mx-auto px-10 md:px-40 py-10">
-        <Lister data={launchers} listfor="launchers" />
+      {isLoading ? (
+          <p>Loading....</p>
+        ) : (
+          <Lister data={data} listfor="launchers" />
+        )}
       </div>
     </section>
   );

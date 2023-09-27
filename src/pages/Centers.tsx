@@ -1,18 +1,14 @@
-import { useEffect, useState } from "react";
+import axios from "axios";
+import { useQuery } from "react-query";
 import Lister from "../components/Lister";
 
 function Centers() {
-  const [centers, setCenters] = useState([]);
-
-  async function getCenters() {
-    const req = await fetch("https://isro.vercel.app/api/centres");
-    const res = await req.json();
-    setCenters(res.centres);
+  async function fetcher() {
+    const res = await axios.get("https://isro.vercel.app/api/centres");
+    return res.data.centres;
   }
 
-  useEffect(() => {
-    getCenters();
-  }, []);
+  const { isLoading, data } = useQuery("cntrs", fetcher, {staleTime: 86400});
 
   return (
     <section className="bg-zinc-900 min-h-screen text-white">
@@ -24,7 +20,11 @@ function Centers() {
         </p>
       </div>
       <div className="container mx-auto px-10 md:px-40 py-10">
-        <Lister data={centers} listfor="centers" />
+      {isLoading ? (
+          <p>Loading....</p>
+        ) : (
+          <Lister data={data} listfor="centers" />
+        )}
       </div>
     </section>
   );
