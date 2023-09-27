@@ -18,16 +18,16 @@ function Lister({ data, listfor }: { data: listData[]; listfor: string }) {
           if (listfor === "spacecrafts") {
             return (
               <li
-                className="flex flex-col justify-center items-center px-2 py-5 rounded-xl border border-gray-500 font-inter text-xl hover:scale-105 shadow-2xl duration-100"
+                className="flex flex-col justify-center items-center px-2 py-5 rounded-xl border border-gray-500 font-space-mono text-xl hover:scale-105 shadow-2xl duration-100"
                 key={item.id}
               >
-                <span className="font-bold">{item.name}</span>
+                <span className="font-bold text-center">{item.name}</span>
               </li>
             );
           } else if (listfor === "launchers") {
             return (
               <li
-                className="flex flex-col justify-center items-center px-2 py-5 rounded-xl border border-gray-500 font-inter text-xl hover:scale-105 shadow-2xl duration-100"
+                className="flex flex-col justify-center items-center px-2 py-5 rounded-xl border border-gray-500 font-space-mono text-xl hover:scale-105 shadow-2xl duration-100"
                 key={item.id}
               >
                 <span className="font-bold">{item.id}</span>
@@ -36,7 +36,7 @@ function Lister({ data, listfor }: { data: listData[]; listfor: string }) {
           } else if (listfor === "customer-launches") {
             return (
               <li
-                className="flex flex-col justify-center items-center px-2 py-5 rounded-xl border border-gray-500 font-inter text-xl hover:scale-105 shadow-2xl duration-100"
+                className="flex flex-col justify-center items-center px-2 py-5 rounded-xl border border-gray-500 font-space-mono text-xl hover:scale-105 shadow-2xl duration-100"
                 key={item.id}
               >
                 <span className="font-bold">{item.id}</span>
@@ -49,7 +49,7 @@ function Lister({ data, listfor }: { data: listData[]; listfor: string }) {
           } else if (listfor === "centers") {
             return (
               <li
-                className="flex flex-col justify-center items-center px-2 py-5 rounded-xl border border-gray-500 font-inter text-xl hover:scale-105 shadow-2xl duration-100"
+                className="flex flex-col justify-center items-center px-2 py-5 rounded-xl border border-gray-500 font-space-mono text-xl hover:scale-105 shadow-2xl duration-100"
                 key={item.id}
               >
                 <span className="font-bold">{item.name}</span>

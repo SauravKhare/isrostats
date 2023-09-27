@@ -19,14 +19,14 @@ function Card({
   return link ? (
     <Link className={`${colspan} ${rowspan}`} to={link}>
       <div
-        className={`flex bg-${bg} ${pad} justify-center items-center rounded-[20px] font-inter text-xl gap-3.5 cursor-pointer hover:scale-105 shadow-2xl duration-100 h-full`}
+        className={`flex ${bg} ${pad} justify-center items-center rounded-[20px] font-space-mono text-xl gap-3.5 cursor-pointer hover:scale-105 shadow-2xl duration-100 h-full`}
       >
         {children}
       </div>
     </Link>
   ) : (
     <div
-      className={`flex bg-${bg} ${pad} ${colspan} ${rowspan} justify-center items-center rounded-[20px] font-inter text-xl gap-3.5 cursor-pointer hover:scale-105 shadow-2xl duration-100 h-full`}
+      className={`flex ${bg} ${pad} ${colspan} ${rowspan} justify-center items-center rounded-[20px] font-space-mono text-xl gap-3.5 cursor-pointer hover:scale-105 shadow-2xl duration-100 h-full`}
     >
       {children}
     </div>

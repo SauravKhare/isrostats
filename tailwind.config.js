@@ -14,7 +14,8 @@ export default {
         'card-dark-pink': '#9E0059',
       },
       fontFamily: {
-        'inter': ['Inter', 'sans-serif']
+        'inter': ['Inter', 'sans-serif'],
+        'space-mono': ['Space Mono', 'monospace'],
       },
     },
   },

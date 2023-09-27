@@ -1,97 +1,132 @@
-import { useEffect, useState } from "react";
 import Card from "../components/Card";
+import { useQueries } from "react-query";
+import axios from "axios";
 
 function Home() {
-  const [spacecrafts, setSpacrcrafts] = useState(0);
-  const [launchers, setLaunchers] = useState(0);
-  const [centers, setCenters] = useState(0);
-  const [customerLaunches, setCustomerLaunches] = useState(0);
+  const [
+    spaceCraftsQuery,
+    launchersQuery,
+    customerLaunchedQuery,
+    centersQuery,
+  ] = useQueries([
+    {
+      queryKey: ["spacecrafts"],
+      queryFn: () =>
+        axios
+          .get("https://isro.vercel.app/api/spacecrafts")
+          .then((res) => res.data),
+      staleTime: 86400,
+    },
+    {
+      queryKey: ["launchers"],
+      queryFn: () =>
+        axios
+          .get("https://isro.vercel.app/api/launchers")
+          .then((res) => res.data),
+      staleTime: 86400,
+    },
+    {
+      queryKey: ["customers"],
+      queryFn: () =>
+        axios
+          .get("https://isro.vercel.app/api/customer_satellites")
+          .then((res) => res.data),
+      staleTime: 86400,
+    },
+    {
+      queryKey: ["centers"],
+      queryFn: () =>
+        axios
+          .get("https://isro.vercel.app/api/centres")
+          .then((res) => res.data),
+      staleTime: 86400,
+    },
+  ]);
 
-  function dataFetcher() {
-    async function fetchSpacecrafts() {
-      const req = await fetch("https://isro.vercel.app/api/spacecrafts");
-      const res = await req.json();
-      setSpacrcrafts(res.spacecrafts.length);
-    }
-
-    async function fetchLaunchers() {
-      const req = await fetch("https://isro.vercel.app/api/launchers");
-      const res = await req.json();
-      setLaunchers(res.launchers.length);
-    }
-
-    async function fetchCenters() {
-      const req = await fetch("https://isro.vercel.app/api/centres");
-      const res = await req.json();
-      setCenters(res.centres.length);
-    }
-
-    async function fetchCustomerLaunches() {
-      const req = await fetch(
-        "https://isro.vercel.app/api/customer_satellites"
-      );
-      const res = await req.json();
-      setCustomerLaunches(res.customer_satellites.length);
-    }
-
-    fetchSpacecrafts();
-    fetchLaunchers();
-    fetchCenters();
-    fetchCustomerLaunches();
-  }
-
-  useEffect(() => {
-    dataFetcher();
-  }, []);
+  console.log(
+    spaceCraftsQuery,
+    launchersQuery,
+    customerLaunchedQuery,
+    centersQuery
+  );
 
   return (
     <section className="grid place-items-center bg-zinc-900 min-h-screen text-white">
-      <div className="grid grid-cols-3 grid-rows-2 gap-6">
+      <div className="md:grid grid-cols-1 md:grid-cols-3 grid-rows-auto md:grid-rows-2 gap-6">
         <Card
           link="/spacecrafts"
-          bg="card-blue"
-          pad="py-14 px-16"
+          bg="bg-card-blue"
+          pad="py-6 px-5 mb-4 md:py-10 md:px-11"
           colspan="col-span-2"
-          rowspan="col-span-1"
+          rowspan="row-span-1"
         >
           <>
-            <span className="text-6xl font-bold">{spacecrafts}</span>Spacecrafts
+            {spaceCraftsQuery.isLoading ? (
+              <p className="text-xl">Loading..</p>
+            ) : (
+              <span className="flex justify-center items-center gap-4 text-6xl font-bold">
+                {spaceCraftsQuery?.data?.spacecrafts?.length}{" "}
+                <p className="text-xl font-normal">Spacecrafts</p>
+              </span>
+            )}
           </>
         </Card>
         <Card
           link="/launchers"
-          bg="card-orange"
-          pad="py-14 px-16"
-          colspan="col-span-1"
-          rowspan="row-span-2"
+          bg="bg-card-orange"
+          pad="py-6 px-5 mb-4 md:py-10 md:px-11"
+          colspan="md:col-span-1"
+          rowspan="md:row-span-2"
         >
           <>
-            <span className="text-6xl font-bold">{launchers}</span> Launchers
+            {spaceCraftsQuery.isLoading ? (
+              <p className="text-xl">Loading..</p>
+            ) : (
+              <span className="flex justify-center items-center gap-4 text-6xl font-bold">
+                {launchersQuery?.data?.launchers?.length}{" "}
+                <p className="text-xl font-normal">Launchers</p>
+              </span>
+            )}
           </>
         </Card>
         <Card
           link="/customer-launches"
-          bg="card-pink"
-          pad="py-14 px-16"
+          bg="bg-card-pink"
+          pad="py-6 px-5 mb-4 md:py-10 md:px-11"
           colspan="col-span-1"
           rowspan="row-span-1"
         >
           <>
-            <span className="text-6xl font-bold">{customerLaunches}</span>{" "}
-            Customer
-            <br />
-            Launches
+            {spaceCraftsQuery.isLoading ? (
+              <p className="text-xl">Loading..</p>
+            ) : (
+              <span className="flex justify-center items-center gap-4 text-6xl font-bold">
+                {customerLaunchedQuery?.data?.customer_satellites?.length}{" "}
+                <p className="text-xl font-normal">
+                  Customer
+                  <br />
+                  Launches
+                </p>
+              </span>
+            )}
           </>
         </Card>
         <Card
           link="/centers"
-          bg="card-dark-pink"
-          pad="py-14 px-16"
+          bg="bg-card-dark-pink"
+          pad="py-6 px-5 mb-4 md:py-10 md:px-11"
           colspan="col-span-1"
           rowspan="row-span-1"
         >
           <>
-            <span className="text-6xl font-bold">{centers}</span> Centers
+            {spaceCraftsQuery.isLoading ? (
+              <p className="text-xl">Loading..</p>
+            ) : (
+              <span className="flex justify-center items-center gap-4 text-6xl font-bold">
+                {centersQuery?.data?.centres?.length}{" "}
+                <p className="text-xl font-normal">Centers</p>
+              </span>
+            )}
           </>
         </Card>
       </div>
